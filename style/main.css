@@ -1,0 +1,19 @@
+header, footer{
+  background-color: salmon;
+  font-size: 3rem;
+}
+
+main {
+ background-color: azure;
+ font-size: 3rem;
+}
+
+form {
+  background-color: salmon;
+  border: 2px dashed navy;
+}
+
+form > select, form > button > a {
+  font-size: 2rem;
+  background-color: navy;
+}
