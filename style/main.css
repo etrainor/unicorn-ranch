@@ -4,7 +4,6 @@ html {
 body {
   width: 100vw;
   margin: 0;
-  height: 100vh;
 }
 header, footer{
   background-color: #962853;
@@ -15,7 +14,7 @@ header, footer{
 header > h1 {
   font-size: 3rem;
   margin: 0;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 main {
   font-size: 2rem;
@@ -52,28 +51,26 @@ form > select, form > button > a {
 }
 
 main > section {
-  width: 90%;
-  margin: 2rem auto;
+  margin: 2rem 4rem;
   border: 2px dashed #394648;
   padding: 1rem;
 }
 
 main > section:first-of-type {
   border: none;
-  width: 100%;
   padding: 0;
   margin: 0;
 }
 
 main > section:nth-of-type(2) {
   border: none;
-  width: 100%;
   padding: 2rem;
-  margin: 0;
+  margin: auto;
   background-color: #962853;
 }
 
 footer {
   padding: 2rem 0;
+  font-size: 2rem;
 }
 
