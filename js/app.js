@@ -119,24 +119,21 @@ function populateLists() {
     liEl.textContent = allUnicorns[i].display;
     let currentLocation = allUnicorns[i].location;
     if (currentLocation === 'barn') {
-      console.log('i am in the barn');
       barn.appendChild(liEl);
     } else if (currentLocation === 'pasture') {
-      console.log('i am in the pasture');
       pasture.appendChild(liEl);
     } else {
-      console.log('i am on the trails');
       trail.appendChild(liEl);
     }
   }
   barnList.appendChild(barn);
   pastureList.appendChild(pasture);
   trailsList.appendChild(trail);
+  saveMe();
 }
 
 document.getElementById('button').addEventListener('click', function(event) {
   event.preventDefault();
-  console.log('click');
   let name = document.getElementById('names').value;
   let location = document.getElementById('locations').value;
   for (let i = 0; i < allUnicorns.length; i++) {
@@ -144,15 +141,36 @@ document.getElementById('button').addEventListener('click', function(event) {
       allUnicorns[i].location = location;
     }
   }
-  console.log(allUnicorns);
   populateLists();
 });
 
 function populatePage() {
-  makeUnicorns();
+  checkStorage();
   addNames();
   addLocations();
   populateLists();
+}
+
+function saveMe() {
+  localStorage.setItem('allUnicorns', JSON.stringify(allUnicorns));
+}
+
+function checkStorage() {
+  if (localStorage.allUnicorns) {
+    let data = JSON.parse(localStorage.getItem('allUnicorns'));
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      let unicorn = new Unicorn(
+        data[i].name,
+        data[i].color,
+        data[i].food,
+        data[i].location
+      );
+      allUnicorns.push(unicorn);
+    }
+  } else {
+    makeUnicorns();
+  }
 }
 
 populatePage();
