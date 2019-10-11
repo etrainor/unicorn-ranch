@@ -44,17 +44,21 @@ let colors = [
 
 let allUnicorns = [];
 
+// Create a unicorn
 function Unicorn(name, color, food, location) {
   this.name = name;
   this.color = color;
   this.food = food;
   this.location = location;
+  this.display = `Name: ${this.name} Color: ${this.color} Food: ${this.food}`;
 }
 
+//Randomly generates a food index
 function getRandomFood(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
+//Instantiate unicorn objects
 function makeUnicorns() {
   for (let i = 0; i < names.length; i++) {
     let unicorn = new Unicorn(
@@ -66,7 +70,7 @@ function makeUnicorns() {
     allUnicorns.push(unicorn);
   }
 }
-
+//Populate the form names select drop down
 function addNames() {
   let list = document.getElementById('names');
   for (let i = 0; i < names.length; i++) {
@@ -77,6 +81,7 @@ function addNames() {
   }
 }
 
+//Populate the form locations select drop down
 function addLocations() {
   let list = document.getElementById('locations');
   for (let i = 0; i < locations.length; i++) {
@@ -87,46 +92,51 @@ function addLocations() {
   }
 }
 
-function startInBarn() {
+//FIXME: This still could be dryer
+function populateLists() {
+  //remove list data if exists
   let barnList = document.getElementById('barn-list');
-  let ulEl = document.createElement('ul');
-  for (let i = 0; i < allUnicorns.length; i++) {
-    if ((allUnicorns[i].location = 'barn')) {
-      let liEl = document.createElement('li');
-      liEl.textContent = `Name: ${allUnicorns[i].name} Color: ${allUnicorns[i].color} Food: ${allUnicorns[i].food}`;
-      ulEl.appendChild(liEl);
-    }
+  if (barnList.childNodes[2]) {
+    barnList.removeChild(barnList.childNodes[2]);
   }
-  barnList.appendChild(ulEl);
-}
-function populatePasture() {
   let pastureList = document.getElementById('pasture-list');
-  let ulEl = document.createElement('ul');
-  for (let i = 0; i < allUnicorns.length; i++) {
-    if ((allUnicorns[i].location = 'pasture')) {
-      let liEl = document.createElement('li');
-      liEl.textContent = `Name: ${allUnicorns[i].name} Color: ${allUnicorns[i].color} Food: ${allUnicorns[i].food}`;
-      ulEl.appendChild(liEl);
-    }
+  if (pastureList.childNodes[2]) {
+    pastureList.removeChild(pastureList.childNodes[2]);
   }
-  pastureList.appendChild(ulEl);
-}
-
-function populateTrails() {
   let trailsList = document.getElementById('trails-list');
-  let ulEl = document.createElement('ul');
+  if (trailsList.childNodes[2]) {
+    trailsList.removeChild(trailsList.childNodes[2]);
+  }
+
+  //create ul for new data
+  let barn = document.createElement('ul');
+  let pasture = document.createElement('ul');
+  let trail = document.createElement('ul');
+
+  // create an li for each unicorn and append it to the appropirate ul element
   for (let i = 0; i < allUnicorns.length; i++) {
-    if ((allUnicorns[i].location = 'trails')) {
-      let liEl = document.createElement('li');
-      liEl.textContent = `Name: ${allUnicorns[i].name} Color: ${allUnicorns[i].color} Food: ${allUnicorns[i].food}`;
-      ulEl.appendChild(liEl);
+    let liEl = document.createElement('li');
+    liEl.textContent = allUnicorns[i].display;
+    let currentLocation = allUnicorns[i].location;
+    if (currentLocation === 'barn') {
+      console.log('i am in the barn');
+      barn.appendChild(liEl);
+    } else if (currentLocation === 'pasture') {
+      console.log('i am in the pasture');
+      pasture.appendChild(liEl);
+    } else {
+      console.log('i am on the trails');
+      trail.appendChild(liEl);
     }
   }
-  trailsList.appendChild(ulEl);
+  barnList.appendChild(barn);
+  pastureList.appendChild(pasture);
+  trailsList.appendChild(trail);
 }
 
 document.getElementById('button').addEventListener('click', function(event) {
   event.preventDefault();
+  console.log('click');
   let name = document.getElementById('names').value;
   let location = document.getElementById('locations').value;
   for (let i = 0; i < allUnicorns.length; i++) {
@@ -134,20 +144,15 @@ document.getElementById('button').addEventListener('click', function(event) {
       allUnicorns[i].location = location;
     }
   }
-  moveLists();
+  console.log(allUnicorns);
+  populateLists();
 });
 
 function populatePage() {
   makeUnicorns();
   addNames();
   addLocations();
-  startInBarn();
+  populateLists();
 }
 
-function moveLists() {
-  startInBarn();
-  populatePasture();
-  populateTrails();
-}
 populatePage();
-console.log(allUnicorns);
